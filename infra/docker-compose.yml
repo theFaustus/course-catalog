@@ -8,7 +8,7 @@ services:
       - "-c"
       - "wal_level=logical"
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: 123456
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: course-catalog-db
     ports:
       - "5433:5432"

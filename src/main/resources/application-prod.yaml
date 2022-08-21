@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    username: postgres
+    password: 123456
+    url: jdbc:postgresql://localhost:5433/course-catalog-db
+    tomcat:
+      validation-query: "SELECT 1"
+      test-while-idle: true
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+  application:
+    name: course-catalog
+
+greeting:
+  message: "Good day,"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-components: always
+      show-details: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+logging:
+  level:
+    inc.evil: debug
