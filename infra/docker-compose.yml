@@ -1,0 +1,14 @@
+version: '3'
+services:
+  course-catalog-operational-db:
+    image: postgres:13.3
+    container_name:   course-catalog-operational-db
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: 123456
+    ports:
+      - "5433:5432"
