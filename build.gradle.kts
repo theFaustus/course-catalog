@@ -26,6 +26,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 }
 
 tasks.withType<KotlinCompile> {
@@ -38,3 +39,14 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+//sourceSets {
+//	test {
+////		withConvention(KotlinSourceSet::class){
+////			kotlin.setSrcDirs(listOf("src/test/integration", "src/test/unit"))
+////		}
+////		java {
+////			setSrcDirs(listOf("src/test/kotlin/inc/evil/coursecatalog/integration", "src/test/kotlin/inc/evil/coursecatalog"))
+////		}
+//	}
+//}

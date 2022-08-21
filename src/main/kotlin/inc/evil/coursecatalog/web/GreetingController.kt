@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class GreetingController(val greetingsService: GreetingsService) {
 
     @GetMapping("/{name}")
-    fun retrieveGreeting(@PathVariable name: String): ResponseEntity<String> {
-        return ResponseEntity.ok(greetingsService.retrieveGreeting(name))
+    fun retrieveGreeting(@PathVariable name: String): ResponseEntity<SuccessResponse> {
+        return ResponseEntity.ok(SuccessResponse(greetingsService.retrieveGreeting(name)))
     }
 }
