@@ -60,7 +60,7 @@ class GlobalExceptionHandler {
         val errorMessages = mutableSetOf<String>()
         e.bindingResult.allErrors.forEach { error ->
             if (error is FieldError) {
-                errorMessages.add("Field '${error.field}' ${Arrays.toString(error.codes)} value was ${error.rejectedValue}")
+                errorMessages.add("Field '${error.field}' ${error.defaultMessage}, but value was [${error.rejectedValue}]")
             } else {
                 errorMessages.add(Arrays.toString(error.codes))
             }
@@ -73,7 +73,7 @@ class GlobalExceptionHandler {
     fun onConstraintViolationException(e: ConstraintViolationException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
         log.warn("Exception while handling request: ${e.message}")
         val errorMessages = mutableSetOf<String>()
-        e.constraintViolations.forEach { errorMessages.add("Field '${it.propertyPath}' ${it.message} value was ${it.invalidValue}")}
+        e.constraintViolations.forEach { errorMessages.add("Field '${it.propertyPath}' ${it.message}, but value was [${it.invalidValue}]")}
         val errorModel = ErrorResponse(request.servletPath, errorMessages)
         return ResponseEntity.badRequest().body(errorModel)
     }

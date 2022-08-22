@@ -4,6 +4,7 @@ import inc.evil.coursecatalog.facade.CourseFacade
 import inc.evil.coursecatalog.web.dto.CourseRequest
 import inc.evil.coursecatalog.web.dto.CourseResponse
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 
@@ -22,7 +23,7 @@ class CourseController(val courseFacade: CourseFacade) {
     fun deleteCourseById(@PathVariable id: Int): ResponseEntity<Unit> = ResponseEntity.ok(courseFacade.deleteById(id))
 
     @PostMapping
-    fun createCourse(@RequestBody request: CourseRequest): ResponseEntity<CourseResponse> {
+    fun createCourse(@Validated @RequestBody request: CourseRequest): ResponseEntity<CourseResponse> {
         val courseResponse = courseFacade.save(request)
         val location = MvcUriComponentsBuilder.fromMethodCall(
             MvcUriComponentsBuilder.on(javaClass).getCourseById(courseResponse.id ?: 0)

@@ -1,9 +1,9 @@
 package inc.evil.coursecatalog
 
+import inc.evil.coursecatalog.common.IntegrationTest
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
+@IntegrationTest
 class CourseCatalogApplicationTests {
 
 	@Test

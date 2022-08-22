@@ -1,14 +1,14 @@
 package inc.evil.coursecatalog.web
 
+import inc.evil.coursecatalog.common.IntegrationTest
 import inc.evil.coursecatalog.common.dto.SuccessResponse
-import inc.evil.coursecatalog.utils.WebIntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 
-@WebIntegrationTest
+@IntegrationTest
 internal class GreetingControllerIntegrationTest {
 
     @Autowired

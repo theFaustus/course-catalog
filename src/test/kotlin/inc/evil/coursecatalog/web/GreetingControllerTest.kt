@@ -1,5 +1,6 @@
 package inc.evil.coursecatalog.web
 
+import inc.evil.coursecatalog.common.UnitTest
 import inc.evil.coursecatalog.common.dto.SuccessResponse
 import inc.evil.coursecatalog.service.GreetingsService
 import org.assertj.core.api.Assertions
@@ -12,9 +13,10 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 
+@UnitTest
 @AutoConfigureWebTestClient
 @WebMvcTest(controllers = [GreetingController::class])
-internal class GreetingControllerUnitTest {
+internal class GreetingControllerTest {
 
     @Autowired
     lateinit var webTestClient: WebTestClient

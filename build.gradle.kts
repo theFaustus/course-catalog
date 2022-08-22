@@ -27,6 +27,8 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+	testImplementation("com.tngtech.archunit:archunit-junit5:1.0.0-rc1")
+	testImplementation("com.h2database:h2:2.1.214")
 }
 
 tasks.withType<KotlinCompile> {
