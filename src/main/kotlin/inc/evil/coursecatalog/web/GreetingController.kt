@@ -1,5 +1,6 @@
 package inc.evil.coursecatalog.web
 
+import inc.evil.coursecatalog.common.dto.SuccessResponse
 import inc.evil.coursecatalog.service.GreetingsService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
