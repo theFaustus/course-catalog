@@ -8,10 +8,10 @@ spring:
       test-while-idle: true
   jpa:
     open-in-view: false
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
     hibernate:
       ddl-auto: update
   application:
