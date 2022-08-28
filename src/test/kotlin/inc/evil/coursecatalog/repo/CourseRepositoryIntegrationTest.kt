@@ -25,6 +25,12 @@ class CourseRepositoryIntegrationTest {
 
     @Test
     @Sql(scripts = ["/test-data/courses.sql"])
+    fun findAllByInstructorName() {
+        assertThat(courseRepository.findAllByInstructorName("Bruce Eckel")).hasSize(3)
+    }
+
+    @Test
+    @Sql(scripts = ["/test-data/courses.sql"])
     fun findAllByCategory() {
         assertThat(courseRepository.findAllByCategory(Category.DEVELOPMENT)).hasSize(2)
     }

@@ -1,15 +1,18 @@
 package inc.evil.coursecatalog.model
 
-import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "courses")
 class Course(
-    val name: String,
-    @Enumerated(EnumType.STRING) var category: Category,
+    var name: String,
+
+    @Enumerated(EnumType.STRING)
+    var category: Category,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instructor_id")
+    var instructor: Instructor? = null
 ) : AbstractEntity() {
 
     override fun toString(): String {

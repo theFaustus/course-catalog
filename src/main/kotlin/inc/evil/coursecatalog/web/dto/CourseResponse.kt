@@ -7,11 +7,19 @@ data class CourseResponse(
     val name: String,
     val category: String,
     val createdAt: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val instructor: InstructorResponse
 ) {
     companion object {
         fun from(course: Course): CourseResponse = course.let {
-            CourseResponse(it.id, it.name, it.category.toString(), it.createdAt.toString(), it.updatedAt.toString())
+            CourseResponse(
+                it.id,
+                it.name,
+                it.category.toString(),
+                it.createdAt.toString(),
+                it.updatedAt.toString(),
+                InstructorResponse.from(it.instructor)
+            )
         }
     }
 }

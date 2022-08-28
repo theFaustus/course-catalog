@@ -1,11 +1,23 @@
-create table courses
+create table instructors
 (
     id         integer   not null
         primary key,
     created_at timestamp not null,
     updated_at timestamp not null,
-    category   varchar(255),
     name       varchar(255)
+);
+
+create table courses
+(
+    id            integer   not null
+        primary key,
+    created_at    timestamp not null,
+    updated_at    timestamp not null,
+    category      varchar(255),
+    name          varchar(255),
+    instructor_id integer
+        constraint fk1kswo6qqebbdy2kq0kx6udof7
+            references instructors
 );
 
 create sequence hibernate_sequence;

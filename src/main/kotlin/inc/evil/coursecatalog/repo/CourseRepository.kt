@@ -11,4 +11,6 @@ interface CourseRepository : JpaRepository<Course, Int> {
     fun findAllByName(name: String): List<Course>
     @Query("select c from Course c where c.category = :category")
     fun findAllByCategory(category: Category): List<Course>
+    @Query("select c from Course c where c.instructor.name = ?1")
+    fun findAllByInstructorName(instructorName: String): List<Course>
 }

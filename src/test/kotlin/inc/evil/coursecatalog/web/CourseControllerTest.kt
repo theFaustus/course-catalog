@@ -5,6 +5,8 @@ import inc.evil.coursecatalog.common.dto.ErrorResponse
 import inc.evil.coursecatalog.facade.CourseFacade
 import inc.evil.coursecatalog.web.dto.CourseRequest
 import inc.evil.coursecatalog.web.dto.CourseResponse
+import inc.evil.coursecatalog.web.dto.InstructorRequest
+import inc.evil.coursecatalog.web.dto.InstructorResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
@@ -75,7 +77,7 @@ internal class CourseControllerTest {
 
     @Test
     fun createCourse() {
-        val courseRequest = CourseRequest("Kotlin Development", "DEVELOPMENT")
+        val courseRequest = CourseRequest("Kotlin Development", "DEVELOPMENT", InstructorRequest("Bruce Eckel"))
         `when`(courseFacade.save(courseRequest)).thenReturn(expectedCourse)
 
         webTestClient.post()
@@ -91,7 +93,7 @@ internal class CourseControllerTest {
 
     @Test
     fun createCourse_withNoCategory_returnsBadRequest() {
-        val courseRequest = CourseRequest("Kotlin Development", "")
+        val courseRequest = CourseRequest("Kotlin Development", "", InstructorRequest("Bruce Eckel"))
         `when`(courseFacade.save(courseRequest)).thenReturn(expectedCourse)
 
         val errorResponse = webTestClient.post()
@@ -114,5 +116,6 @@ internal class CourseControllerTest {
         "DEVELOPMENT",
         "2022-08-22 20:22:36.510984",
         "2022-08-22 20:22:36.572486",
+        InstructorResponse(-9, "Bruce Eckel")
     )
 }
