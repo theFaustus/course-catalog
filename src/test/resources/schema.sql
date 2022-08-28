@@ -1,4 +1,4 @@
-create table instructors
+create table if not exists instructors
 (
     id         integer   not null
         primary key,
@@ -7,7 +7,7 @@ create table instructors
     name       varchar(255)
 );
 
-create table courses
+create table if not exists courses
 (
     id            integer   not null
         primary key,

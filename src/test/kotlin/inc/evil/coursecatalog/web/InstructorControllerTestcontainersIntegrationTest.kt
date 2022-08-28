@@ -1,6 +1,7 @@
 package inc.evil.coursecatalog.web
 
-import inc.evil.coursecatalog.common.IntegrationTest
+import inc.evil.coursecatalog.common.AbstractTestcontainersIntegrationTest
+import inc.evil.coursecatalog.common.TestcontainersIntegrationTest
 import inc.evil.coursecatalog.common.dto.ErrorResponse
 import inc.evil.coursecatalog.web.dto.InstructorRequest
 import inc.evil.coursecatalog.web.dto.InstructorResponse
@@ -10,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
 
-@IntegrationTest
-internal class InstructorControllerIntegrationTest {
+@TestcontainersIntegrationTest
+internal class InstructorControllerTestcontainersIntegrationTest : AbstractTestcontainersIntegrationTest() {
 
     @Autowired
     lateinit var webTestClient: WebTestClient
 
     @Test
-    @Sql(scripts = ["/h2/courses.sql"])
+    @Sql(scripts = ["/postgres/courses.sql"])
     fun getInstructorById() {
         val expectedInstructor = InstructorResponse(-1, "Bruce Eckel")
 
@@ -37,7 +38,7 @@ internal class InstructorControllerIntegrationTest {
     }
 
     @Test
-    @Sql(scripts = ["/h2/courses.sql"])
+    @Sql(scripts = ["/postgres/courses.sql"])
     fun getAllInstructors() {
         val instructorsResponse = webTestClient.get()
             .uri("/api/v1/instructors")
@@ -51,7 +52,7 @@ internal class InstructorControllerIntegrationTest {
     }
 
     @Test
-    @Sql(scripts = ["/h2/courses.sql"])
+    @Sql(scripts = ["/postgres/courses.sql"])
     fun deleteInstructorById() {
         val id = -1
 

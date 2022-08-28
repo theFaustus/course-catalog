@@ -31,6 +31,8 @@ dependencies {
 	testImplementation("com.tngtech.archunit:archunit-junit5:1.0.0-rc1")
 	testImplementation("com.h2database:h2:2.1.214")
 	testImplementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
+	testImplementation("org.testcontainers:testcontainers:1.17.3")
+	testImplementation("org.testcontainers:postgresql:1.17.3")
 
 }
 
