@@ -1,0 +1,37 @@
+type Query {
+    getAllCourses: [CourseResponse]!
+    getCourseById(id: Int): CourseResponse
+
+    getAllInstructors: [InstructorResponse]!
+    getInstructorById(id: Int): InstructorResponse
+}
+
+type Mutation {
+    deleteCourseById(id: Int): Boolean
+    createCourse(request: CourseRequest): CourseResponse
+
+    deleteInstructorById(id: Int): Boolean
+    createInstructor(request: InstructorRequest): InstructorResponse
+}
+
+type CourseResponse {
+    id: ID
+    name: String
+    category: String
+    instructor: InstructorResponse
+}
+
+input CourseRequest{
+    name: String
+    category: String
+    instructor: InstructorRequest
+}
+
+type InstructorResponse {
+    id: ID
+    name: String
+}
+
+input InstructorRequest {
+    name: String
+}

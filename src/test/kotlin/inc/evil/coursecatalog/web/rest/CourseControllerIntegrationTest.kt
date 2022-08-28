@@ -1,7 +1,6 @@
-package inc.evil.coursecatalog.web
+package inc.evil.coursecatalog.web.rest
 
-import inc.evil.coursecatalog.common.AbstractTestcontainersIntegrationTest
-import inc.evil.coursecatalog.common.TestcontainersIntegrationTest
+import inc.evil.coursecatalog.common.IntegrationTest
 import inc.evil.coursecatalog.common.dto.ErrorResponse
 import inc.evil.coursecatalog.web.dto.CourseRequest
 import inc.evil.coursecatalog.web.dto.CourseResponse
@@ -13,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
 
-@TestcontainersIntegrationTest
-internal class CourseControllerTestcontainersIntegrationTest : AbstractTestcontainersIntegrationTest() {
+@IntegrationTest
+internal class CourseControllerIntegrationTest {
 
     @Autowired
     lateinit var webTestClient: WebTestClient
 
     @Test
-    @Sql(scripts = ["/postgres/courses.sql"])
+    @Sql(scripts = ["/h2/courses.sql"])
     fun getCourseById() {
         val expectedCourse = CourseResponse(
             -1,
@@ -48,7 +47,7 @@ internal class CourseControllerTestcontainersIntegrationTest : AbstractTestconta
     }
 
     @Test
-    @Sql(scripts = ["/postgres/courses.sql"])
+    @Sql(scripts = ["/h2/courses.sql"])
     fun getAllCourses() {
         val coursesResponse = webTestClient.get()
             .uri("/api/v1/courses")
@@ -62,7 +61,7 @@ internal class CourseControllerTestcontainersIntegrationTest : AbstractTestconta
     }
 
     @Test
-    @Sql(scripts = ["/postgres/courses.sql"])
+    @Sql(scripts = ["/h2/courses.sql"])
     fun deleteCourseById() {
         val id = -1
 
@@ -79,8 +78,7 @@ internal class CourseControllerTestcontainersIntegrationTest : AbstractTestconta
             .returnResult()
             .responseBody
 
-        assertThat(courseResponse?.messages).isEqualTo(setOf("Course with id equal to [-1] could not be found!"))
-    }
+        assertThat(courseResponse?.messages).isEqualTo(setOf("Course with id equal to [-1] could not be found!"))    }
 
     @Test
     fun createCourse() {

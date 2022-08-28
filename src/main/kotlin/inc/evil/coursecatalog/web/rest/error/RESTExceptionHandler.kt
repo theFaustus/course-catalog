@@ -1,4 +1,4 @@
-package inc.evil.coursecatalog.common.advice
+package inc.evil.coursecatalog.web.rest.error
 
 import inc.evil.coursecatalog.common.dto.ErrorResponse
 import inc.evil.coursecatalog.common.exceptions.NotFoundException
@@ -19,29 +19,29 @@ import javax.validation.ConstraintViolationException
 import javax.validation.ValidationException
 
 @Order
-@ControllerAdvice
-class GlobalExceptionHandler {
+@ControllerAdvice(basePackages = ["inc.evil.coursecatalog.web.rest"])
+class RESTExceptionHandler {
     companion object {
         private val log: Logger = LoggerFactory.getLogger(this::class.java)
     }
 
     @ExceptionHandler(Exception::class)
     fun onException(e: Exception, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
-        log.error("Exception while handling request", e)
+        log.error("Exception while handling request ${e.message}", e)
         val errorModel = ErrorResponse(request.servletPath, setOf(e.message ?: "n/a"))
         return ResponseEntity.internalServerError().body(errorModel)
     }
 
     @ExceptionHandler(ValidationException::class)
     fun onValidationException(e: ValidationException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
-        log.warn("Validation error while handling request: ${e.message}")
+        log.warn("Validation error while handling request: ${e.message}", e)
         val errorModel = ErrorResponse(request.servletPath, setOf(e.message ?: "n/a"))
         return ResponseEntity.badRequest().body(errorModel)
     }
 
     @ExceptionHandler(NotFoundException::class)
     fun onNotFoundException(e: NotFoundException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
-        log.warn("Entity not found: ${e.message}")
+        log.warn("Entity not found: ${e.message}", e)
         val errorModel = ErrorResponse(request.servletPath, setOf(e.message ?: "n/a"))
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorModel)
     }
@@ -49,14 +49,14 @@ class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException::class)
     fun onMissingServletRequestParameterException(e: MissingServletRequestParameterException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
         val message = "Parameter: '${e.parameterName}' of type ${e.parameterType} is required but is missing"
-        log.warn("Exception while handling request: $message")
+        log.warn("Exception while handling request: $message", e)
         val errorModel = ErrorResponse(request.servletPath, setOf(e.message))
         return ResponseEntity.badRequest().body(errorModel)
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun onMethodArgumentNotValidException(e: MethodArgumentNotValidException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
-        log.warn("Exception while handling request: ${e.message}")
+        log.warn("Exception while handling request: ${e.message}", e)
         val errorMessages = mutableSetOf<String>()
         e.bindingResult.allErrors.forEach { error ->
             if (error is FieldError) {
@@ -71,7 +71,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException::class)
     fun onConstraintViolationException(e: ConstraintViolationException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
-        log.warn("Exception while handling request: ${e.message}")
+        log.warn("Exception while handling request: ${e.message}", e)
         val errorMessages = mutableSetOf<String>()
         e.constraintViolations.forEach { errorMessages.add("Field '${it.propertyPath}' ${it.message}, but value was [${it.invalidValue}]")}
         val errorModel = ErrorResponse(request.servletPath, errorMessages)
@@ -82,7 +82,7 @@ class GlobalExceptionHandler {
     fun onMethodArgumentTypeMismatchException(e: MethodArgumentTypeMismatchException, request: HttpServletRequest): ResponseEntity<ErrorResponse?>? {
         val parameter = e.parameter
         val message = "Parameter: '${parameter.parameterName}' is not valid. Value '${e.value}' could not be bound to type: '${parameter.parameterType.simpleName.lowercase()}'"
-        log.warn("Exception while handling request: {}", message)
+        log.warn("Exception while handling request: $message", e)
         val errorModel = ErrorResponse(request.servletPath, setOf(message))
         return ResponseEntity.badRequest().body(errorModel)
     }

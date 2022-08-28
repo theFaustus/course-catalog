@@ -6,6 +6,8 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition
 import com.tngtech.archunit.library.GeneralCodingRules
+import graphql.kickstart.tools.GraphQLMutationResolver
+import graphql.kickstart.tools.GraphQLResolver
 import org.springframework.stereotype.Controller
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
@@ -50,11 +52,20 @@ class ArchUnitTest {
         .haveNameMatching("(.*ControllerImpl)|(.*Controller)")
 
     @ArchTest
-    val controllersAreInTheControllerPackage: ArchRule = ArchRuleDefinition.classes()
+    val restControllersAreInTheControllerPackage: ArchRule = ArchRuleDefinition.classes()
         .that()
         .areAnnotatedWith(RestController::class.java)
         .should()
-        .resideInAPackage("..web")
+        .resideInAPackage("..web.rest")
+
+    @ArchTest
+    val graphqlResolversAreInTheControllerPackage: ArchRule = ArchRuleDefinition.classes()
+        .that()
+        .areAssignableTo(GraphQLResolver::class.java)
+        .or()
+        .areAssignableTo(GraphQLMutationResolver::class.java)
+        .should()
+        .resideInAPackage("..web.graphql")
 
     @ArchTest
     val servicesAreInTheServicePackage: ArchRule = ArchRuleDefinition.classes()

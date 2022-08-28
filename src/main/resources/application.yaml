@@ -18,6 +18,10 @@ spring:
     name: course-catalog
   profiles:
     active: default
+  graphql:
+    graphiql:
+      enabled: true
+
 
 greeting:
   message: "Hi there,"
@@ -42,3 +46,4 @@ management:
 logging:
   level:
     inc.evil: debug
+

@@ -17,7 +17,7 @@ class CourseFacadeImpl(val courseService: CourseService, val instructorService: 
     override fun findById(id: Int): CourseResponse = CourseResponse.from(courseService.findById(id))
 
     override fun save(courseRequest: CourseRequest): CourseResponse {
-        val instructor = Instructor(courseRequest.name)
+        val instructor = Instructor(courseRequest.instructor.name)
         instructorService.save(instructor)
         val course = Course(courseRequest.name, Category.valueOf(courseRequest.category), instructor)
         return CourseResponse.from(courseService.save(course))

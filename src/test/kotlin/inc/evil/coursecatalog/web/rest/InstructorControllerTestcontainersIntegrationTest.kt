@@ -1,4 +1,4 @@
-package inc.evil.coursecatalog.web
+package inc.evil.coursecatalog.web.rest
 
 import inc.evil.coursecatalog.common.AbstractTestcontainersIntegrationTest
 import inc.evil.coursecatalog.common.TestcontainersIntegrationTest

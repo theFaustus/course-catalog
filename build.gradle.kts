@@ -25,6 +25,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
+	implementation("org.springframework.boot:spring-boot-starter-graphql")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -33,7 +34,7 @@ dependencies {
 	testImplementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
 	testImplementation("org.testcontainers:testcontainers:1.17.3")
 	testImplementation("org.testcontainers:postgresql:1.17.3")
-
+	testImplementation("org.springframework.graphql:spring-graphql-test")
 }
 
 tasks.withType<KotlinCompile> {

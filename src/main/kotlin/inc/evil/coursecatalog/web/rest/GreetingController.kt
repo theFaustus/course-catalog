@@ -1,4 +1,4 @@
-package inc.evil.coursecatalog.web
+package inc.evil.coursecatalog.web.rest
 
 import inc.evil.coursecatalog.common.dto.SuccessResponse
 import inc.evil.coursecatalog.service.GreetingsService
