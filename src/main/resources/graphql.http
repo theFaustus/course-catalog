@@ -2,7 +2,7 @@
 GRAPHQL http://localhost:8080/graphql
 Content-Type: application/graphql
 
-query { getCourseById(id: 2) {
+query { getCourseById(id: -999) {
     id
     name
     instructor {
@@ -25,7 +25,7 @@ Content-Type: application/graphql
 
 mutation { createCourse(
     request: {
-        name: "Intro to Kotlin",
+        name: "",
         category: "DEVELOPMENT",
         instructor: {
             name: "Thomas William"
@@ -65,7 +65,7 @@ Content-Type: application/graphql
 
 mutation { createInstructor(
     request: {
-        name: "Thomas William"
+        name: ""
     }) {
     id
     name

@@ -1,0 +1,27 @@
+### will create topic legacy-server.instructors-db.instructors based on dbservername, schema and whitelisted tables
+PUT http://localhost:8083/connectors/legacy-instructors-debezium-postgres-connector/config
+Content-Type: application/json
+
+{
+  "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+  "database.user": "postgres",
+  "database.dbname": "instructors-db",
+  "database.history.kafka.bootstrap.servers": "broker:29092",
+  "database.history.kafka.topic": "history",
+  "transforms": "unwrap,addTopicPrefix",
+  "database.server.name": "legacy-server",
+  "transforms.addTopicPrefix.replacement": "postgres-debezium-$1",
+  "transforms.addTopicPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
+  "database.port": "5432",
+  "include.schema.changes": "true",
+  "plugin.name": "pgoutput",
+  "table.whitelist": "public.instructors",
+  "decimal.handling.mode": "double",
+  "database.hostname": "instructors-legacy-db",
+  "database.password": "123456",
+  "transforms.addTopicPrefix.regex": "(.*)",
+  "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState"
+}
+
+###
+GET http://localhost:8083/connectors?expand=info&expand=status

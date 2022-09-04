@@ -1,8 +1,31 @@
 version: '3'
 services:
+  course-catalog-kafka-cluster:
+    container_name: course-catalog-kafka-cluster
+    image: landoop/fast-data-dev
+    environment:
+      ADV_HOST: 127.0.0.1         # Change to 192.168.99.100 if using Docker Toolbox
+      RUNTESTS: 0                 # Disable Running tests so the cluster starts faster
+    ports:
+      - 2181:2181                 # Zookeeper
+      - 3030:3030                 # Landoop UI
+      - 8081-8083:8081-8083       # REST Proxy, Schema Registry, Kafka Connect ports
+      - 9581-9585:9581-9585       # JMX Ports
+      - 9092:9092                 # Kafka Broker
+    volumes:
+      # Specify an absolute path mapping
+      - C:\Users\ionpa\Projects\course-catalog\infra:/my-data
+  course-catalog-elasticsearch:
+    container_name: course-catalog-elasticsearch
+    image: itzg/elasticsearch:2.4.3
+    environment:
+      PLUGINS: appbaseio/dejavu
+      OPTS: -Dindex.number_of_shards=1 -Dindex.number_of_replicas=0
+    ports:
+      - "9200:9200"
   course-catalog-operational-db:
     image: postgres:13.3
-    container_name:   course-catalog-operational-db
+    container_name: course-catalog-operational-db
     command:
       - "postgres"
       - "-c"
@@ -12,3 +35,34 @@ services:
       POSTGRES_DB: course-catalog-db
     ports:
       - "5433:5432"
+#source -> kafka -> app/kafka listener
+  instructors-legacy-db:
+    image: postgres:13.3
+    container_name: instructors-legacy-db
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: instructors-db
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+#source -> kafka -> sink
+  other-instructors-legacy-db:
+    image: postgres:13.3
+    container_name: other-instructors-legacy-db
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: instructors-db
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./init_2.sql:/docker-entrypoint-initdb.d/init.sql
+

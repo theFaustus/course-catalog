@@ -1,0 +1,23 @@
+{
+  "name": "courses.connector",
+  "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+  "timestamp.column.name": "updated_at",
+  "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+  "timestamp.delay.interval.ms": "-10800000",
+  "table.types": "VIEW",
+  "mode": "timestamp",
+  "transforms.createKey.fields": "KEY",
+  "poll.interval.ms": "100",
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "key.converter.schemas.enable": "true",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": "true",
+  "numeric.mapping": "best_fit",
+  "connection.attempts": "100",
+  "connection.backoff.ms": "300000",
+  "connection.url": "jdbc:postgresql://course-catalog-operational-db:5432/course-catalog-db",
+  "connection.user": "postgres",
+  "connection.password": "123456",
+  "query": "select * from courses",
+  "topic.prefix": "courses-topic"
+}

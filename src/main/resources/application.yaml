@@ -8,10 +8,10 @@ spring:
       test-while-idle: true
   jpa:
     open-in-view: false
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
+    #    show-sql: true
+    #    properties:
+    #      hibernate:
+    #        format_sql: true
     hibernate:
       ddl-auto: update
   application:
@@ -22,9 +22,20 @@ spring:
     graphiql:
       enabled: true
 
-
 greeting:
   message: "Hi there,"
+
+kafka:
+  consumer:
+    legacyInstructorsTopic: legacy-instructors
+    bootstrapServers: localhost:9092
+    schemaRegistryUrl: http://127.0.0.1:8081
+    applicationId: course.catalog
+    clientId: ${kafka.applicationId}
+    consumerGroupId: course.catalog.consumer
+    consumerClientId: ${kafka.groupId}
+    autoOffsetReset: earliest
+    autoCommitInterval: 1000
 
 management:
   endpoints:
