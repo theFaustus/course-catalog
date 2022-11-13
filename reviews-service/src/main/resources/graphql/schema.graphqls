@@ -1,0 +1,25 @@
+type Query {
+    getAllReviews: [ReviewResponse]!
+    getReviewById(id: Int): ReviewResponse
+}
+
+type Mutation {
+    deleteReviewById(id: Int): Boolean
+    createReview(request: ReviewRequest): ReviewResponse
+}
+
+
+type ReviewResponse {
+    id: ID
+    text: String
+    author: String
+    createdAt: String
+    lastModifiedAt: String
+    courseId: Int
+}
+
+input ReviewRequest {
+    text: String
+    author: String
+    courseId: Int
+}

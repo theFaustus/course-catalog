@@ -1,0 +1,47 @@
+###
+GRAPHQL http://localhost:8081/graphql
+Content-Type: application/graphql
+
+query { getReviewById(id: 1) {
+    id
+    text
+    author
+    courseId
+    createdAt
+    lastModifiedAt
+}
+}
+
+###
+GRAPHQL http://localhost:8081/graphql
+Content-Type: application/graphql
+
+mutation { deleteReviewById(id: 2) }
+
+###
+GRAPHQL http://localhost:8081/graphql
+Content-Type: application/graphql
+
+query { getAllReviews {
+    id
+    text
+    author
+    courseId
+    createdAt
+    lastModifiedAt
+}
+}
+
+###
+GRAPHQL http://localhost:8081/graphql
+Content-Type: application/graphql
+
+mutation { createReview(request: {text: "Amazing, loved it!" courseId: 3 author: "Anonymous"}) {
+    id
+    text
+    author
+    courseId
+    createdAt
+    lastModifiedAt
+}
+}

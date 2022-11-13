@@ -1,0 +1,52 @@
+
+
+spring:
+  data:
+    r2dbc:
+      repositories:
+        enabled: true
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5436/reviews-db
+    username: postgres
+    password: 123456
+    pool:
+      enabled: true
+      max-size: 20
+      validation-query: SELECT 1
+      initial-size: 5
+      max-idle-time: 30s
+      max-create-connection-time: 30s
+      max-acquire-time: 30s
+      max-life-time: 30s
+  application:
+    name: reviews-service
+  profiles:
+    active: default
+  graphql:
+    graphiql:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-components: always
+      show-details: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+logging:
+  level:
+    inc.evil: DEBUG
+    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+    io.r2dbc.postgresql.PARAM: DEBUG # for parameters
+server:
+  port: 8081

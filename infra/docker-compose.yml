@@ -43,6 +43,18 @@ services:
       POSTGRES_DB: course-catalog-db
     ports:
       - "5433:5432"
+  reviews-operational-r2db:
+    image: postgres:13.3
+    container_name: reviews-operational-r2db
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: reviews-db
+    ports:
+      - "5436:5432"
 #source -> kafka -> app/kafka listener
   instructors-legacy-db:
     image: postgres:13.3
