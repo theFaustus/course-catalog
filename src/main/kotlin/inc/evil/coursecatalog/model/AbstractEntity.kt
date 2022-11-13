@@ -18,7 +18,7 @@ abstract class AbstractEntity {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
-        other as Course
+        other as AbstractEntity
 
         return id != null && id == other.id
     }

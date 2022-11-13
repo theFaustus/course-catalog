@@ -5,13 +5,17 @@ import inc.evil.coursecatalog.common.exceptions.NotFoundException
 import inc.evil.coursecatalog.model.Instructor
 import inc.evil.coursecatalog.repo.InstructorRepository
 import inc.evil.coursecatalog.service.InstructorService
+import inc.evil.coursecatalog.service.WikipediaApiClient
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.time.ZoneId
 
 @Service
-class InstructorServiceImpl(val instructorRepository: InstructorRepository) : InstructorService {
+class InstructorServiceImpl(
+    val wikipediaApiClient: WikipediaApiClient,
+    val instructorRepository: InstructorRepository
+) : InstructorService {
     @Transactional(readOnly = true)
     override fun findAll(): List<Instructor> = instructorRepository.findAll()
 
@@ -20,7 +24,17 @@ class InstructorServiceImpl(val instructorRepository: InstructorRepository) : In
         instructorRepository.findById(id).orElseThrow { NotFoundException(Instructor::class, "id", id.toString()) }
 
     @Transactional
-    override fun save(instructor: Instructor): Instructor = instructorRepository.save(instructor)
+    override fun save(instructor: Instructor): Instructor {
+        enrichWithSummary(instructor)
+        return instructorRepository.save(instructor)
+    }
+
+    private fun enrichWithSummary(instructor: Instructor) {
+        wikipediaApiClient.fetchSummaryFor(instructor.name)?.let {
+            instructor.summary = it.summary
+            instructor.description = it.description
+        }
+    }
 
     @Transactional
     override fun upsert(legacyInstructor: InstructorAggregate): Instructor {

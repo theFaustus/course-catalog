@@ -1,10 +1,12 @@
 create table if not exists instructors
 (
-    id         integer   not null
+    id          integer   not null
         primary key,
-    created_at timestamp not null,
-    updated_at timestamp not null,
-    name       varchar(255)
+    created_at  timestamp not null,
+    updated_at  timestamp not null,
+    description varchar(3000),
+    name        varchar(255),
+    summary     varchar(3000)
 );
 
 create table if not exists courses

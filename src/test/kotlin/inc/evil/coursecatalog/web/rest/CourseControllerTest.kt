@@ -2,11 +2,11 @@ package inc.evil.coursecatalog.web.rest
 
 import inc.evil.coursecatalog.common.WebUnitTest
 import inc.evil.coursecatalog.common.dto.ErrorResponse
+import inc.evil.coursecatalog.common.fixtures.CourseResponseFixture
 import inc.evil.coursecatalog.facade.CourseFacade
 import inc.evil.coursecatalog.web.dto.CourseRequest
 import inc.evil.coursecatalog.web.dto.CourseResponse
 import inc.evil.coursecatalog.web.dto.InstructorRequest
-import inc.evil.coursecatalog.web.dto.InstructorResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.verify
@@ -26,7 +26,7 @@ internal class CourseControllerTest {
     @MockBean
     lateinit var courseFacade: CourseFacade
 
-    private val expectedCourse = courseResponse()
+    private val expectedCourse = CourseResponseFixture.of()
 
     @Test
     fun getCourseById() {
@@ -110,12 +110,4 @@ internal class CourseControllerTest {
 
     }
 
-    private fun courseResponse() = CourseResponse(
-        -1,
-        "Kotlin course",
-        "DEVELOPMENT",
-        "2022-08-22 20:22:36.510984",
-        "2022-08-22 20:22:36.572486",
-        InstructorResponse(-9, "Bruce Eckel")
-    )
 }

@@ -58,3 +58,6 @@ logging:
   level:
     inc.evil: debug
 
+api:
+  wikipedia:
+      url: https://en.wikipedia.org/api/rest_v1

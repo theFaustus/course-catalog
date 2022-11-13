@@ -1,20 +1,25 @@
 package inc.evil.coursecatalog.web.rest
 
-import inc.evil.coursecatalog.common.AbstractTestcontainersIntegrationTest
-import inc.evil.coursecatalog.common.TestcontainersIntegrationTest
+import com.github.tomakehurst.wiremock.WireMockServer
+import inc.evil.coursecatalog.common.*
 import inc.evil.coursecatalog.common.dto.ErrorResponse
+import inc.evil.coursecatalog.common.fixtures.CourseResponseFixture
 import inc.evil.coursecatalog.web.dto.CourseRequest
 import inc.evil.coursecatalog.web.dto.CourseResponse
 import inc.evil.coursecatalog.web.dto.InstructorRequest
-import inc.evil.coursecatalog.web.dto.InstructorResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @TestcontainersIntegrationTest
+@ContextConfiguration(initializers = [WireMockContextInitializer::class])
 internal class CourseControllerTestcontainersIntegrationTest : AbstractTestcontainersIntegrationTest() {
+
+    @Autowired
+    private lateinit var wireMockServer: WireMockServer
 
     @Autowired
     lateinit var webTestClient: WebTestClient
@@ -22,14 +27,7 @@ internal class CourseControllerTestcontainersIntegrationTest : AbstractTestconta
     @Test
     @Sql(scripts = ["/postgres/courses.sql"])
     fun getCourseById() {
-        val expectedCourse = CourseResponse(
-            -1,
-            "Kotlin course",
-            "DEVELOPMENT",
-            "2022-08-22 20:22:36.510984",
-            "2022-08-22 20:22:36.572486",
-            InstructorResponse(-9, "Bruce Eckel")
-        )
+        val expectedCourse = CourseResponseFixture.of()
 
         val courseResponse = webTestClient.get()
             .uri("/api/v1/courses/{id}", expectedCourse.id)
@@ -84,6 +82,9 @@ internal class CourseControllerTestcontainersIntegrationTest : AbstractTestconta
 
     @Test
     fun createCourse() {
+        val responseBody = IO.read("/json/wikipediea-response.json")
+        wireMockServer.stubResponse("/page/summary/Bruce%20Eckel", responseBody)
+
         val courseResponse = webTestClient.post()
             .uri("/api/v1/courses")
             .bodyValue(CourseRequest("Kotlin Development", "DEVELOPMENT", InstructorRequest("Bruce Eckel")))
@@ -94,6 +95,8 @@ internal class CourseControllerTestcontainersIntegrationTest : AbstractTestconta
             .responseBody
 
         assertThat(courseResponse?.id).isNotNull
+        assertThat(courseResponse?.instructor?.summary).isEqualTo("Bruce Eckel is a computer programmer, author and consultant.")
+        assertThat(courseResponse?.instructor?.description).isEqualTo("American computer programmer, author and consultant")
     }
 
 }

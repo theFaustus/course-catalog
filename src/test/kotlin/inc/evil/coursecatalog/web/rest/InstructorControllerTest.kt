@@ -2,6 +2,7 @@ package inc.evil.coursecatalog.web.rest
 
 import inc.evil.coursecatalog.common.WebUnitTest
 import inc.evil.coursecatalog.common.dto.ErrorResponse
+import inc.evil.coursecatalog.common.fixtures.InstructorResponseFixture
 import inc.evil.coursecatalog.facade.InstructorFacade
 import inc.evil.coursecatalog.web.dto.InstructorRequest
 import inc.evil.coursecatalog.web.dto.InstructorResponse
@@ -24,7 +25,7 @@ internal class InstructorControllerTest {
     @MockBean
     lateinit var instructorFacade: InstructorFacade
 
-    private val expectedInstructor = instructorResponse()
+    private val expectedInstructor = InstructorResponseFixture.of()
 
     @Test
     fun getInstructorById() {
@@ -107,5 +108,4 @@ internal class InstructorControllerTest {
 
     }
 
-    private fun instructorResponse() = InstructorResponse(-1, "Bruce Eckel")
 }

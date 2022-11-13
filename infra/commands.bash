@@ -1,3 +1,4 @@
+docker-compose up course-catalog-operational-db
 docker-compose up kafka-cluster
 #enter bash
 docker exec -it kafka-cluster bash
@@ -47,3 +48,10 @@ curl -i -X PUT -H  "Content-Type:application/json" http://localhost:8083/connect
             "transforms.addTopicPrefix.regex":"(.*)",
             "transforms.addTopicPrefix.replacement":"postgres-debezium-$1"
     }'
+
+#when using vpn try to ping
+nc -vz ip 8080
+#change docker to 192.168.65.0/28
+docker network prune
+docker-compose rm
+docker-compose up

@@ -1,19 +1,29 @@
 package inc.evil.coursecatalog.web.rest
 
+import com.github.tomakehurst.wiremock.WireMockServer
+import inc.evil.coursecatalog.common.IO
 import inc.evil.coursecatalog.common.IntegrationTest
+import inc.evil.coursecatalog.common.WireMockContextInitializer
 import inc.evil.coursecatalog.common.dto.ErrorResponse
+import inc.evil.coursecatalog.common.fixtures.CourseResponseFixture
+import inc.evil.coursecatalog.common.stubResponse
 import inc.evil.coursecatalog.web.dto.CourseRequest
 import inc.evil.coursecatalog.web.dto.CourseResponse
 import inc.evil.coursecatalog.web.dto.InstructorRequest
-import inc.evil.coursecatalog.web.dto.InstructorResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
 
+
 @IntegrationTest
+@ContextConfiguration(initializers = [WireMockContextInitializer::class])
 internal class CourseControllerIntegrationTest {
+
+    @Autowired
+    private lateinit var wireMockServer: WireMockServer
 
     @Autowired
     lateinit var webTestClient: WebTestClient
@@ -21,14 +31,7 @@ internal class CourseControllerIntegrationTest {
     @Test
     @Sql(scripts = ["/h2/courses.sql"])
     fun getCourseById() {
-        val expectedCourse = CourseResponse(
-            -1,
-            "Kotlin course",
-            "DEVELOPMENT",
-            "2022-08-22 20:22:36.510984",
-            "2022-08-22 20:22:36.572486",
-            InstructorResponse(-9, "Bruce Eckel")
-        )
+        val expectedCourse = CourseResponseFixture.of()
 
         val courseResponse = webTestClient.get()
             .uri("/api/v1/courses/{id}", expectedCourse.id)
@@ -82,6 +85,9 @@ internal class CourseControllerIntegrationTest {
 
     @Test
     fun createCourse() {
+        val responseBody = IO.read("/json/wikipediea-response.json")
+        wireMockServer.stubResponse("/page/summary/Bruce%20Eckel", responseBody)
+
         val courseResponse = webTestClient.post()
             .uri("/api/v1/courses")
             .bodyValue(CourseRequest("Kotlin Development", "DEVELOPMENT", InstructorRequest("Bruce Eckel")))

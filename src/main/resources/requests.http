@@ -19,10 +19,10 @@ POST http://localhost:8080/api/v1/courses
 Content-Type: application/json
 
 {
-  "name": "Java Development",
+  "name": "C++ Development",
   "category": "DEVELOPMENT",
   "instructor": {
-    "name": "Bruce Eckel"
+    "name": "Bjarne Stroustrup"
   }
 }
 
@@ -45,3 +45,12 @@ Content-Type: application/json
 {
   "name": "Bruce Eckel"
 }
+
+###
+GET https://en.wikipedia.org/api/rest_v1//page/summary/Bruce%20Eckel
+
+###
+GET http://localhost:53818/page/summary/Bruce%20Eckel
+Content-Type: application/json
+
+
