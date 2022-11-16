@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 
-@TestcontainersIntegrationTest
+@ComponentTest
 @ContextConfiguration(initializers = [WireMockContextInitializer::class])
 internal class WikipediaApiClientImplTest : AbstractTestcontainersIntegrationTest() {
 

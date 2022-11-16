@@ -1,0 +1,10 @@
+query getAllReviews {
+    getAllReviews {
+        id
+        createdAt
+        lastModifiedAt
+        text
+        courseId
+        author
+    }
+}

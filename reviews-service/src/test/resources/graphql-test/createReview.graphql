@@ -1,0 +1,10 @@
+mutation createReview($request: ReviewRequest) {
+    createReview(request: $request) {
+        id
+        createdAt
+        lastModifiedAt
+        text
+        courseId
+        author
+    }
+}

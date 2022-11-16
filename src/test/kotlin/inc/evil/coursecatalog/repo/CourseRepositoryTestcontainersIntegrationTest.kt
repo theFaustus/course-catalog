@@ -1,6 +1,7 @@
 package inc.evil.coursecatalog.repo;
 
 import inc.evil.coursecatalog.common.AbstractTestcontainersIntegrationTest
+import inc.evil.coursecatalog.common.TestcontainersIntegrationTest
 import inc.evil.coursecatalog.model.Category
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -8,13 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.jdbc.Sql
 import java.util.stream.Stream
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestcontainersIntegrationTest
 class CourseRepositoryTestcontainersIntegrationTest : AbstractTestcontainersIntegrationTest() {
 
     @Autowired

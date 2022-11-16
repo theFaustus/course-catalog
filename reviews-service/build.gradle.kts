@@ -46,6 +46,9 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers:1.17.3")
     testImplementation("org.testcontainers:postgresql:1.17.3")
     testImplementation("com.github.tomakehurst:wiremock:2.27.2")
+    testImplementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    testImplementation("io.projectreactor:reactor-test")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 }

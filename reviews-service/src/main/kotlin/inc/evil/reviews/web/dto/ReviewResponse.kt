@@ -6,8 +6,8 @@ data class ReviewResponse(
     val id: Int?,
     val text: String,
     val author: String,
-    val createdAt: String,
-    val lastModifiedAt: String,
+    val createdAt: String?,
+    val lastModifiedAt: String?,
     val courseId: Int,
 ) {
     companion object {

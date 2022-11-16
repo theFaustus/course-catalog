@@ -7,19 +7,21 @@ import inc.evil.reviews.service.ReviewService
 import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class ReviewServiceImpl(val reviewRepository: ReviewRepository) : ReviewService {
     override suspend fun findAll(): List<Review> {
         return reviewRepository.findAll().collectList().awaitFirst()
     }
 
     override suspend fun findById(id: Int): Review {
-        return reviewRepository.findById(id).awaitFirstOrNull() ?: throw NotFoundException(Review::class, "id", "id")
+        return reviewRepository.findById(id).awaitFirstOrNull() ?: throw NotFoundException(Review::class, "id", id.toString())
     }
 
     override suspend fun save(review: Review): Review {
-        return reviewRepository.save(review).awaitFirstOrNull() ?: throw NotFoundException(Review::class, "id", "id")
+        return reviewRepository.save(review).awaitFirst()
     }
 
     override suspend fun deleteById(id: Int): Void? {

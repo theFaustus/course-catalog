@@ -1,0 +1,10 @@
+query getReviewById($id: Int) {
+    getReviewById(id: $id) {
+        id
+        createdAt
+        lastModifiedAt
+        text
+        courseId
+        author
+    }
+}

@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.reactive.server.WebTestClient
 
-@TestcontainersIntegrationTest
+@ComponentTest
 @ContextConfiguration(initializers = [WireMockContextInitializer::class])
 internal class CourseControllerTestcontainersIntegrationTest : AbstractTestcontainersIntegrationTest() {
 
