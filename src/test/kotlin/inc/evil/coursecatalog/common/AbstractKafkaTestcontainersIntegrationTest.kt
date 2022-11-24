@@ -4,38 +4,24 @@ import org.junit.jupiter.api.BeforeAll
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.KafkaContainer
-import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
 
-abstract class AbstractTestcontainersIntegrationTest {
+abstract class AbstractKafkaTestcontainersIntegrationTest {
 
     companion object {
-
-        private val postgres: PostgreSQLContainer<*> = PostgreSQLContainer(DockerImageName.parse("postgres:13.3"))
-            .apply {
-                this.withDatabaseName("testDb")
-                    .withUsername("root")
-                    .withPassword("123456")
-            }
 
         val kafka: KafkaContainer = KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:latest"))
             .withEmbeddedZookeeper()
 
-
         @JvmStatic
         @DynamicPropertySource
         fun properties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", postgres::getJdbcUrl)
-            registry.add("spring.datasource.username", postgres::getUsername)
-            registry.add("spring.datasource.password", postgres::getPassword)
             registry.add("kafka.consumer.bootstrap-servers", kafka::getBootstrapServers)
-            registry.add("spring.kafka.bootstrap-servers", kafka::getBootstrapServers)
         }
 
         @JvmStatic
         @BeforeAll
         internal fun setUp(): Unit {
-            postgres.start()
             kafka.start()
         }
 

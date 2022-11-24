@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import reactor.test.StepVerifier
 import ro.orange.eshop.userordermanagement.common.RepositoryIntegrationTest
 import ro.orange.eshop.userordermanagement.common.RunSql
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @RepositoryIntegrationTest
@@ -25,7 +26,7 @@ class ReviewRepositoryIntegrationTest : AbstractTestcontainersIntegrationTest() 
     @Test
     @RunSql(["schema.sql", "/data/reviews.sql"])
     fun findAllByCreatedAt() {
-        StepVerifier.create(reviewRepository.findAllByCreatedAt(LocalDateTime.parse("2022-11-14T00:08:54.266024")))
+        StepVerifier.create(reviewRepository.findAllByCreatedAt_Date(LocalDate.parse("2022-11-14")))
             .expectNextCount(1)
             .verifyComplete()
     }

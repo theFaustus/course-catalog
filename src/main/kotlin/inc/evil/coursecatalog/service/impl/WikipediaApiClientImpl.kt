@@ -60,7 +60,9 @@ class WikipediaApiClientImpl(val wikipediaApiConfig: WikipediaApiConfig) : Wikip
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     data class WikipediaSummary(
+        @JsonProperty("title")
         val title: String,
+        @JsonProperty("description")
         val description: String,
         @JsonProperty("extract")
         val summary: String

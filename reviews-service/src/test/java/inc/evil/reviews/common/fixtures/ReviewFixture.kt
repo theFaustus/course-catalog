@@ -15,5 +15,9 @@ class ReviewFixture {
             lastModifiedAt: LocalDateTime? = LocalDateTime.ofEpochSecond(1000, 0, ZoneOffset.UTC)
         ) =
             Review(id, text, author, createdAt, lastModifiedAt, courseId)
+
+        fun michaelScottReview() = Review(-1, "well, well how the turn tables", "Michael Scott", LocalDateTime.now(), LocalDateTime.now(), 3)
+
+
     }
 }

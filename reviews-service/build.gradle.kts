@@ -33,6 +33,7 @@ dependencies {
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
+    implementation("org.apache.pdfbox:pdfbox:2.0.27")
 
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.6.4")
@@ -63,5 +64,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
 
 

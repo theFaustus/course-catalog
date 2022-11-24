@@ -11,7 +11,7 @@ import org.springframework.graphql.test.tester.GraphQlTester
 import ro.orange.eshop.userordermanagement.common.RunSql
 
 @ComponentTest
-internal class ReviewGraphQLControllerTest : AbstractTestcontainersIntegrationTest() {
+internal class ReviewGraphQLControllerComponentTest : AbstractTestcontainersIntegrationTest() {
 
     @Autowired
     private lateinit var graphQlTester: GraphQlTester

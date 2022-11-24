@@ -54,14 +54,20 @@ internal class ReviewServiceImplTest {
     }
 
     @Test
-    fun deleteById() {
+    fun deleteById_whenInvoked_callsRepository() {
+        //Fixture setup - Given - Arrange
         val review = ReviewFixture.of()
         val id = review.id!!
         `when`(reviewRepository.deleteById(id)).thenReturn(Mono.empty())
 
         runBlocking {
+            //Exercise system - When - Act
             reviewService.deleteById(id)
+            //Verify outcome - Then - Assert
             verify(reviewRepository).deleteById(id)
         }
+
+        //Teardown - Annihilate
+        //Usually garbage collector does the magic
     }
 }

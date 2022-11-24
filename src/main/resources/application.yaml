@@ -31,9 +31,9 @@ kafka:
     bootstrapServers: localhost:9092
     schemaRegistryUrl: http://127.0.0.1:8081
     applicationId: course.catalog
-    clientId: ${kafka.applicationId}
+    clientId: ${kafka.consumer.applicationId}
     consumerGroupId: course.catalog.consumer
-    consumerClientId: ${kafka.groupId}
+    consumerClientId: ${kafka.consumer.consumerGroupId}
     autoOffsetReset: earliest
     autoCommitInterval: 1000
 

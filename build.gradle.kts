@@ -64,6 +64,7 @@ dependencies {
     testImplementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
     testImplementation("org.testcontainers:testcontainers:1.17.3")
     testImplementation("org.testcontainers:postgresql:1.17.3")
+    testImplementation("org.testcontainers:kafka:1.17.3")
     testImplementation("com.github.tomakehurst:wiremock:2.27.2")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -82,8 +83,8 @@ tasks.withType<Test> {
 }
 
 tasks.withType<com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask> {
-    println("${projectDir}\\src\\main\\resources\\avro")
     source(file("${projectDir}\\src\\main\\resources\\avro"))
+    setOutputDir(file("${projectDir}\\src\\main\\kotlin"))
 }
 
 avro {

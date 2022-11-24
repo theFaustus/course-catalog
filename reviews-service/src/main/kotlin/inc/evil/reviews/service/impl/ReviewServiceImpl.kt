@@ -8,6 +8,7 @@ import kotlinx.coroutines.reactive.awaitFirst
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 @Service
 @Transactional
@@ -26,5 +27,9 @@ class ReviewServiceImpl(val reviewRepository: ReviewRepository) : ReviewService 
 
     override suspend fun deleteById(id: Int): Void? {
         return reviewRepository.deleteById(id).awaitFirstOrNull()
+    }
+
+    override suspend fun findAllByCreatedAt(date: LocalDate): List<Review> {
+        return reviewRepository.findAllByCreatedAt_Date(date).collectList().awaitFirst()
     }
 }

@@ -16,6 +16,18 @@ import javax.persistence.Entity
 class ArchUnitTest {
 
     @ArchTest
+    val controllersShouldNotTalkToRepositories: ArchRule = ArchRuleDefinition.noClasses()
+        .that()
+        .resideInAPackage("..web..")
+        .should()
+        .dependOnClassesThat()
+        .resideInAnyPackage("..repo..")
+
+    @ArchTest
+    val loggingLibraryShouldBeUsedInsteadOfSystemOut = GeneralCodingRules.NO_CLASSES_SHOULD_ACCESS_STANDARD_STREAMS
+        .because("The preferred way of logging is via a logging library like logback")
+    
+    @ArchTest
     val jpaRepositoriesMustBeAnnotatedWithTheRepositoryAnnotation: ArchRule = ArchRuleDefinition.classes()
         .that()
         .areInterfaces()
@@ -78,24 +90,12 @@ class ArchUnitTest {
         .resideInAPackage("..model")
 
     @ArchTest
-    val controllersShouldNotTalkToRepositories: ArchRule = ArchRuleDefinition.noClasses()
-        .that()
-        .resideInAPackage("..web..")
-        .should()
-        .dependOnClassesThat()
-        .resideInAnyPackage("..repo..")
-
-    @ArchTest
     val controllersShouldNotTalkToJpaEntities: ArchRule = ArchRuleDefinition.noClasses()
         .that()
         .areAnnotatedWith(RestController::class.java).or().areAnnotatedWith(Controller::class.java)
         .should()
         .dependOnClassesThat()
         .areAnnotatedWith(Entity::class.java)
-
-    @ArchTest
-    val loggingLibraryShouldBeUsedInsteadOfSystemOut = GeneralCodingRules.NO_CLASSES_SHOULD_ACCESS_STANDARD_STREAMS
-        .because("The preferred way of logging is via a logging library like logback")
 
     @ArchTest
     val noFieldInjection = GeneralCodingRules.NO_CLASSES_SHOULD_USE_FIELD_INJECTION

@@ -1,0 +1,21 @@
+server:
+  port: 3030
+
+kafka:
+  consumer:
+    legacyInstructorsTopic: legacy-instructors
+    bootstrapServers: localhost:9092
+    schemaRegistryUrl: mock://testUrl
+    applicationId: course.catalog
+    clientId: ${kafka.consumer.applicationId}
+    consumerGroupId: course.catalog.consumer
+    consumerClientId: ${kafka.consumer.consumerGroupId}
+    autoOffsetReset: earliest
+    autoCommitInterval: 1000
+
+greeting:
+  message: "Hi there,"
+
+api:
+  wikipedia:
+    url: https://en.wikipedia.org/api/rest_v1
