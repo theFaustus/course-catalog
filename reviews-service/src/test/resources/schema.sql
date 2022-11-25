@@ -7,6 +7,6 @@ create table if not exists reviews
     author           varchar(255),
     created_at       timestamp,
     last_modified_at timestamp,
-    course_id        integer not null
+    course_id        integer
 );
 

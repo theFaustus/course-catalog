@@ -20,5 +20,5 @@ data class Review(
     @Column("last_modified_at")
     var lastModifiedAt: LocalDateTime? = null,
     @Column("course_id")
-    var courseId: Int
+    var courseId: Int? = null
 )

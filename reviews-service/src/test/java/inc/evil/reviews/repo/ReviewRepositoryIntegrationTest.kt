@@ -26,7 +26,7 @@ class ReviewRepositoryIntegrationTest : AbstractTestcontainersIntegrationTest() 
     @Test
     @RunSql(["schema.sql", "/data/reviews.sql"])
     fun findAllByCreatedAt() {
-        StepVerifier.create(reviewRepository.findAllByCreatedAt_Date(LocalDate.parse("2022-11-14")))
+        StepVerifier.create(reviewRepository.findAllByCreatedAt(LocalDate.parse("2022-11-14")))
             .expectNextCount(1)
             .verifyComplete()
     }

@@ -8,7 +8,7 @@ data class ReviewResponse(
     val author: String,
     val createdAt: String?,
     val lastModifiedAt: String?,
-    val courseId: Int,
+    val courseId: Int?,
 ) {
     companion object {
         fun from(review: Review) = ReviewResponse(review.id, review.text, review.author, review.createdAt.toString(), review.lastModifiedAt.toString(), review.courseId)

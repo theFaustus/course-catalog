@@ -1,7 +1,9 @@
 package inc.evil.reviews.common
 
+import io.r2dbc.spi.ConnectionFactory
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Tag
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
@@ -9,6 +11,9 @@ import org.testcontainers.utility.DockerImageName
 
 @Tag("integration-test")
 abstract class AbstractTestcontainersIntegrationTest {
+
+    @Autowired
+    lateinit var connectionFactory: ConnectionFactory
 
     companion object {
 

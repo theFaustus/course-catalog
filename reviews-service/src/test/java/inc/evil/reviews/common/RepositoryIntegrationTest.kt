@@ -6,8 +6,8 @@ import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 
 @DataR2dbcTest
+@Tag("integration")
 @Target(AnnotationTarget.CLASS)
 @ExtendWith(RunSqlExtension::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Tag("integration")
 annotation class RepositoryIntegrationTest()

@@ -30,6 +30,6 @@ class ReviewServiceImpl(val reviewRepository: ReviewRepository) : ReviewService 
     }
 
     override suspend fun findAllByCreatedAt(date: LocalDate): List<Review> {
-        return reviewRepository.findAllByCreatedAt_Date(date).collectList().awaitFirst()
+        return reviewRepository.findAllByCreatedAt(date).collectList().awaitFirst()
     }
 }
