@@ -19,7 +19,11 @@ abstract class AbstractTestcontainersIntegrationTest {
 
         private val postgres: PostgreSQLContainer<*> = PostgreSQLContainer(DockerImageName.parse("postgres:13.3"))
             .apply {
-                this.withDatabaseName("testDb").withUsername("root").withPassword("123456")
+                this.withDatabaseName("testDb")
+                    .withUsername("root")
+                    .withPassword("123456")
+                    .withReuse(true)
+                    .withInitScript("schema.sql")
             }
 
         @JvmStatic

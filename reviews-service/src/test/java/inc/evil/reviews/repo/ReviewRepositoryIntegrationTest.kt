@@ -16,7 +16,7 @@ class ReviewRepositoryIntegrationTest : AbstractTestcontainersIntegrationTest() 
     lateinit var reviewRepository: ReviewRepository
 
     @Test
-    @RunSql(["schema.sql", "/data/reviews.sql"])
+    @RunSql(["/data/reviews.sql"])
     fun findAllByAuthor() {
         StepVerifier.create(reviewRepository.findAllByAuthor("Anonymous"))
             .expectNextCount(3)
@@ -24,7 +24,7 @@ class ReviewRepositoryIntegrationTest : AbstractTestcontainersIntegrationTest() 
     }
 
     @Test
-    @RunSql(["schema.sql", "/data/reviews.sql"])
+    @RunSql(["/data/reviews.sql"])
     fun findAllByCreatedAt() {
         StepVerifier.create(reviewRepository.findAllByCreatedAt(LocalDate.parse("2022-11-14")))
             .expectNextCount(1)
@@ -32,7 +32,7 @@ class ReviewRepositoryIntegrationTest : AbstractTestcontainersIntegrationTest() 
     }
 
     @Test
-    @RunSql(["schema.sql", "/data/reviews.sql"])
+    @RunSql(["/data/reviews.sql"])
     fun findAllByCreatedAtBetween() {
         StepVerifier.create(
             reviewRepository.findAllByCreatedAtBetween(
