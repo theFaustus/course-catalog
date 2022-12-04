@@ -1,6 +1,8 @@
 package inc.evil.reviews.repo
 
 import inc.evil.reviews.common.AbstractTestcontainersIntegrationTest
+import inc.evil.reviews.model.AuthoredTextProjection
+import inc.evil.reviews.model.ReviewsCountPerAuthorView
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import reactor.test.StepVerifier
@@ -42,5 +44,39 @@ class ReviewRepositoryIntegrationTest : AbstractTestcontainersIntegrationTest() 
         )
             .expectNextCount(4)
             .verifyComplete()
+    }
+
+    @Test
+    @RunSql(["/data/reviews.sql"])
+    fun findAllAuthoredTextProjections() {
+        StepVerifier.create(reviewRepository.findAllAuthoredTextProjections())
+            .expectNextMatches { it.getAuthoredText() == "Amazing, loved it! - Anonymous" && it.getCourseId() == 3 }
+            .expectNextMatches { it.getAuthoredText() == "Great, loved it! - Anonymous" && it.getCourseId() == 3 }
+            .expectNextMatches { it.getAuthoredText() == "Good, loved it! - Sponge Bob" && it.getCourseId() == 3 }
+            .expectNextMatches { it.getAuthoredText() == "Nice, loved it! - Anonymous" && it.getCourseId() == 3 }
+            .verifyComplete()
+    }
+
+    @Test
+    @RunSql(["/data/reviews.sql"])
+    fun findAllTextProjectionsByAuthor() {
+        StepVerifier.create(reviewRepository.findAllTextProjectionsByAuthor("Sponge Bob"))
+            .expectNextMatches { it.text == "Good, loved it!" }
+            .verifyComplete()
+    }
+
+    @Test
+    @RunSql(["/data/reviews.sql"])
+    fun countReviewsPerAuthor() {
+        StepVerifier.create(reviewRepository.countReviewsPerAuthor())
+            .expectNextMatches { it == ReviewsCountPerAuthorView("Anonymous", 3) }
+            .expectNextMatches { it == ReviewsCountPerAuthorView("Sponge Bob", 1) }
+            .verifyComplete()
+    }
+
+    class AuthoredTextProjectionImpl(val courseId: Int, val text: String) : AuthoredTextProjection {
+        override fun getCourseId(): Int = courseId
+        override fun getAuthoredText(): String = text
+
     }
 }
