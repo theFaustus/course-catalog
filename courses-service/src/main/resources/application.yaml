@@ -1,0 +1,64 @@
+
+spring:
+  datasource:
+    username: postgres
+    password: 123456
+    url: jdbc:postgresql://localhost:5433/course-catalog-db
+    tomcat:
+      validation-query: "SELECT 1"
+      test-while-idle: true
+  jpa:
+    open-in-view: false
+    #    show-sql: true
+    #    properties:
+    #      hibernate:
+    #        format_sql: true
+    hibernate:
+      ddl-auto: update
+  application:
+    name: course-catalog
+  profiles:
+    active: default
+  graphql:
+    graphiql:
+      enabled: true
+
+greeting:
+  message: "Hi there,"
+
+kafka:
+  consumer:
+    legacyInstructorsTopic: legacy-instructors
+    bootstrapServers: localhost:9092
+    schemaRegistryUrl: http://127.0.0.1:8081
+    applicationId: course.catalog
+    clientId: ${kafka.consumer.applicationId}
+    consumerGroupId: course.catalog.consumer
+    consumerClientId: ${kafka.consumer.consumerGroupId}
+    autoOffsetReset: earliest
+    autoCommitInterval: 1000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-components: always
+      show-details: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+logging:
+  level:
+    inc.evil: debug
+
+api:
+  wikipedia:
+      url: https://en.wikipedia.org/api/rest_v1

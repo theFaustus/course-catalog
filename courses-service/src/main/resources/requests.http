@@ -1,0 +1,70 @@
+###
+GET http://localhost:8080/api/v1/greetings/Michael
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/v1/courses
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/v1/courses/8
+Content-Type: application/json
+
+###
+DELETE http://localhost:8080/api/v1/courses/2
+Content-Type: application/json
+
+###
+POST http://localhost:8081/api/v1/courses
+Content-Type: application/json
+
+{
+  "name": "C++ Development",
+  "category": "TUTORIAL",
+  "programmingLanguage" : "C++",
+  "instructor": {
+    "name": "Bjarne Stroustrup"
+  }
+}
+
+### second instance
+POST http://localhost:8081/api/v1/courses
+Content-Type: application/json
+
+{
+  "name": "Java Development",
+  "category": "TUTORIAL",
+  "programmingLanguage" : "Java",
+  "instructor": {
+    "name": "Bjarne Stroustrup"
+  }
+}
+
+###
+GET http://localhost:8080/api/v1/instructors
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/v1/instructors/9
+Content-Type: application/json
+
+###
+DELETE http://localhost:8080/api/v1/instructors/11
+Content-Type: application/json
+
+###
+POST http://localhost:8080/api/v1/instructors
+Content-Type: application/json
+
+{
+  "name": "Bruce Eckel"
+}
+
+###
+GET https://en.wikipedia.org/api/rest_v1/page/summary/java_(programming_language)
+
+###
+GET http://localhost:53818/page/summary/Bruce%20Eckel
+Content-Type: application/json
+
+

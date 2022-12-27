@@ -97,6 +97,4 @@ class ArchUnitTest {
     val loggingLibraryShouldBeUsedInsteadOfSystemOut = GeneralCodingRules.NO_CLASSES_SHOULD_ACCESS_STANDARD_STREAMS
         .because("The preferred way of logging is via a logging library like logback")
 
-    @ArchTest
-    val noFieldInjection = GeneralCodingRules.NO_CLASSES_SHOULD_USE_FIELD_INJECTION
 }

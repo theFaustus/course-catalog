@@ -33,10 +33,10 @@ query { getAllReviews {
 }
 
 ###
-GRAPHQL http://localhost:8081/graphql
+GRAPHQL http://localhost:8082/graphql
 Content-Type: application/graphql
 
-mutation { createReview(request: {text: "Amazing, loved it!" courseId: 3 author: "Anonymous"}) {
+mutation { createReview(request: {text: "Amazing, loved it!" courseId: 99 author: "Mike Scott"}) {
     id
     text
     author
