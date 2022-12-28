@@ -1,6 +1,7 @@
 package inc.evil.coursecatalog.service.impl
 
 import com.hazelcast.core.HazelcastInstance
+import inc.evil.coursecatalog.common.exceptions.LockAcquisitionException
 import inc.evil.coursecatalog.common.exceptions.NotFoundException
 import inc.evil.coursecatalog.config.hazelcast.HazelcastConfiguration.Companion.WIKIPEDIA_SUMMARIES
 import inc.evil.coursecatalog.model.Course
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+private const val SUMMARIES_LOCK = "summaries-lock"
+
 @Service
 class CourseServiceImpl(
     val courseRepository: CourseRepository,
@@ -22,6 +25,7 @@ class CourseServiceImpl(
     companion object {
         private val log: Logger = LoggerFactory.getLogger(this::class.java)
     }
+
     @Transactional(readOnly = true)
     override fun findAll(): List<Course> = courseRepository.findAll()
 
@@ -36,6 +40,9 @@ class CourseServiceImpl(
     }
 
     private fun enhanceWithProgrammingLanguageDescription(course: Course) {
+        val lock = hazelcastInstance.cpSubsystem.getLock(SUMMARIES_LOCK)
+        if (!lock.tryLock()) throw LockAcquisitionException(SUMMARIES_LOCK, "enhanceWithProgrammingLanguageDescription")
+        Thread.sleep(2000)
         val summaries = hazelcastInstance.getMap<String, WikipediaApiClientImpl.WikipediaSummary>(WIKIPEDIA_SUMMARIES)
         log.debug("Fetched hazelcast cache [$WIKIPEDIA_SUMMARIES] = [${summaries}(${summaries.size})]  ")
         summaries.getOrElse(course.programmingLanguage) {
@@ -45,6 +52,7 @@ class CourseServiceImpl(
                 it
             }
         }?.let { course.programmingLanguageDescription = it.summary }
+        lock.unlock()
     }
 
     @Transactional
